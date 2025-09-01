@@ -16,7 +16,34 @@
     <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_MEASUREMENT_ID"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MS0YD9EVD3"></script>
+<!-- Signup Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">Sign Up for Legacy AI</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="signupForm">
+                    <div class="mb-3">
+                        <label for="signupEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+                <div id="signupError" class="text-danger mt-2" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AUy9o-ROuIkc6QG09-CFT8H193u_FCVDqGUq0BbVO4Ge1zVbRQfPCs1YEjSAbUI415dRiUhRgYfzQVUW&currency=USD&components=buttons,marks,card-fields"></script>
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
     <script async src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
@@ -37,6 +64,7 @@
                     <li class="nav-item"><a class="nav-link" href="#" data-page="moments">Moments That Matter</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" data-page="challenges">Family Challenges</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" data-page="pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" data-page="client-portal">Joyful Portal</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
