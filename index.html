@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Legacy AI: Your Joyful Legacy, Powered by AI. Celebrate life, relive memories, and shape the future with AI-curated happiness.">
+    <meta name="keywords" content="digital scrapbook, AI storytelling, family memories, joyful moments, interactive legacy, family challenges, memory preservation">
+    <meta property="og:title" content="Legacy AI - Celebrate Life’s Joyful Moments">
+    <meta property="og:description" content="Create vibrant, interactive digital scrapbooks with Legacy AI. Share happy memories and build family adventures for generations.">
+    <meta property="og:image" content="https://YOUR_WEBSITE_DOMAIN/images/legacy-ai-og.jpg">
+    <meta property="og:url" content="https://YOUR_WEBSITE_DOMAIN">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Legacy AI - Celebrate Life’s Joyful Moments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_MEASUREMENT_ID"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AUy9o-ROuIkc6QG09-CFT8H193u_FCVDqGUq0BbVO4Ge1zVbRQfPCs1YEjSAbUI415dRiUhRgYfzQVUW&currency=USD&components=buttons,marks,card-fields"></script>
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    <script async src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+</head>
+<body>
+    <div class="toast-container"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" data-page="home">
+                <img src="https://firebasestorage.googleapis.com/v0/b/YOUR_FIREBASE_STORAGE_BUCKET/o/images%2Flogo.png?alt=media" alt="Legacy AI" class="img-fluid" style="max-height: 40px;" loading="lazy">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="moments">Moments That Matter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="challenges">Family Challenges</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="client-portal">Joyful Portal</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Language
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-lang="en">English</a></li>
+                            <li><a class="dropdown-item" href="#" data-lang="es">Spanish</a></li>
+                            <li><a class="dropdown-item" href="#" data-lang="fr">French</a></li>
+                            <li><a class="dropdown-item" href="#" data-lang="de">German</a></li>
+                            <li><a class="dropdown-item" href="#" data-lang="pt">Portuguese</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section id="home" class="page-section active">
+        <div class="hero text-white py-5 px-3 mt-5">
+            <div class="container">
+                <h1 data-key="home_title" class="fs-2">Capture Life’s Joyful Moments with Legacy AI</h1>
+                <p class="lead fs-6" data-key="home_lead">Relive the past, celebrate the present, and shape the future with AI-curated happiness. Create Together, Reminisce Forever: Build vibrant digital scrapbooks and happy timelines for generations.</p>
+                <div class="d-grid gap-3 d-md-block">
+                    <a href="https://forms.gle/YOUR_CONSULTATION_FORM_ID" class="btn btn-joyful btn-lg w-100 w-md-auto mt-3" target="_blank" data-key="get_started_free">Get Started Free</a>
+                    <a href="https://firebasestorage.googleapis.com/v0/b/YOUR_FIREBASE_STORAGE_BUCKET/o/downloads%2Fjoyful-guide.pdf?alt=media" class="btn btn-outline-light btn-lg w-100 w-md-auto mt-3" download data-key="download_joyful_guide">Download Joyful Memory Guide</a>
+                </div>
+            </div>
+        </div>
+        <div class="py-5 bg-light px-3">
+            <div class="container">
+                <h2 class="text-center mb-4 fs-3" data-key="how_it_works_title">How Legacy AI Spreads Joy</h2>
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4">
+                        <h4 data-key="capture_moments_step" class="fs-5">1. Capture Happy Moments</h4>
+                        <p data-key="capture_moments_desc">Upload photos, videos, and voice notes of birthdays, trips, and everyday joys.</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <h4 data-key="create_adventures_step" class="fs-5">2. Create Family Adventures</h4>
+                        <p data-key="create_adventures_desc">AI crafts interactive stories and games starring your loved ones.</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <h4 data-key="build_timeline_step" class="fs-5">3. Build a Happy Timeline</h4>
+                        <p data-key="build_timeline_desc">Organize milestones into a vibrant digital scrapbook for all to cherish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="moments" class="page-section">
+        <div class="container py-5 px-3">
+            <h2 class="text-center mb-4 fs-3" data-key="moments_title">Moments That Matter</h2>
+            <p class="lead text-center" data-key="moments_intro">Relive the joy of birthdays, family trips, inside jokes, and everyday moments. Upload your happiest memories to create a digital scrapbook that sparks smiles.</p>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 mb-4">
+                    <div class="card p-3 text-center">
+                        <h4 data-key="upload_photos_title" class="fs-5">Photos of Joy</h4>
+                        <p data-key="upload_photos_desc">Share snapshots of laughter and love.</p>
+                        <input type="file" class="form-control mb-2" accept="image/*" id="uploadPhotoInput" multiple>
+                        <textarea class="form-control mb-2" id="photoEmotionInput" data-placeholder-key="emotion_tag_placeholder" placeholder="Tag emotions or themes (e.g., #joyful, #adventure)"></textarea>
+                        <button class="btn btn-joyful btn-lg w-100" data-key="upload_now" id="uploadPhotoButton">Upload Now</button>
+                        <div class="progress-container" id="photoProgressContainer"><div class="progress-bar" id="photoProgressBar">0%</div></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 mb-4">
+                    <div class="card p-3 text-center">
+                        <h4 data-key="record_voice_title" class="fs-5">Voice Notes</h4>
+                        <p data-key="record_voice_desc">Capture jokes, songs, or heartfelt messages.</p>
+                        <textarea class="form-control mb-2" id="voiceEmotionInput" data-placeholder-key="emotion_tag_placeholder" placeholder="Tag emotions or themes (e.g., #laughter, #wisdom)"></textarea>
+                        <button class="btn btn-joyful btn-lg w-100" data-key="record_now" id="recordVoiceButton">Record Now</button>
+                        <button class="btn btn-outline-joyful btn-lg w-100 mt-2" data-key="stop_recording" id="stopRecordingButton" style="display: none;">Stop Recording</button>
+                        <div class="mt-2" id="recordingTimer" style="display: none;">00:00</div>
+                        <audio controls id="audioPreview" class="w-100 mt-2" style="display: none;"></audio>
+                        <div class="progress-container" id="voiceProgressContainer"><div class="progress-bar" id="voiceProgressBar">0%</div></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 mb-4">
+                    <div class="card p-3 text-center">
+                        <h4 data-key="share_videos_title" class="fs-5">Happy Videos</h4>
+                        <p data-key="share_videos_desc">Upload clips of celebrations and adventures.</p>
+                        <input type="file" class="form-control mb-2" accept="video/*" id="uploadVideoInput" multiple>
+                        <textarea class="form-control mb-2" id="videoEmotionInput" data-placeholder-key="emotion_tag_placeholder" placeholder="Tag emotions or themes (e.g., #celebration, #travel)"></textarea>
+                        <button class="btn btn-joyful btn-lg w-100" data-key="upload_now" id="uploadVideoButton">Upload Now</button>
+                        <div class="progress-container" id="videoProgressContainer"><div class="progress-bar" id="videoProgressBar">0%</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="challenges" class="page-section">
+        <div class="container py-5 px-3">
+            <h2 class="text-center mb-4 fs-3" data-key="challenges_title">Interactive Family Challenges</h2>
+            <p class="lead text-center" data-key="challenges_intro">Bring your family closer with fun prompts that create joyful memories. Complete challenges and build a positive archive together!</p>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card p-4 text-center">
+                        <h4 data-key="funny_question_title" class="fs-5">Funny Question Challenge</h4>
+                        <p data-key="funny_question_desc">Ask your grandparents one hilarious question today and record their answer!</p>
+                        <textarea class="form-control mb-2" id="funnyQuestionResponse" placeholder="Your family's answer..."></textarea>
+                        <button class="btn btn-joyful btn-lg w-100" data-key="start_challenge" data-challenge-id="funny-question">Submit Response</button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card p-4 text-center">
+                        <h4 data-key="dance_off_title" class="fs-5">Family Dance-Off</h4>
+                        <p data-key="dance_off_desc">Record a 60-second family dance-off and share the fun!</p>
+                        <input type="file" class="form-control mb-2" accept="video/*" id="danceOffVideoInput">
+                        <button class="btn btn-joyful btn-lg w-100" data-key="start_challenge" data-challenge-id="dance-off">Upload Video</button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card p-4 text-center">
+                        <h4 data-key="childhood_memory_title" class="fs-5">Childhood Memory Story</h4>
+                        <p data-key="childhood_memory_desc">Share a 60-second story of your happiest childhood moment.</p>
+                        <textarea class="form-control mb-2" id="childhoodMemoryResponse" placeholder="Your story..."></textarea>
+                        <button class="btn btn-joyful btn-lg w-100" data-key="start_challenge" data-challenge-id="childhood-memory">Submit Story</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="pricing" class="page-section">
+        <div class="container py-5 px-3">
+            <h2 class="text-center mb-4 fs-3" data-key="pricing_title">Choose Your Joyful Plan</h2>
+            <p class="text-center mb-5" data-key="pricing_intro">Start free or unlock premium features to create unforgettable family memories.</p>
+            <div id="plan-status" class="alert alert-info text-center" style="display: none;"></div>
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <h3 data-key="free_tier_title">Basic Legacy</h3>
+                            <p data-key="free_tier_desc">Limited text & photo archive, AI memory highlights, 5 AI interactions/month.</p>
+                            <p class="display-4 fw-bold">$0</p>
+                            <button class="btn btn-joyful plan-button" data-key="get_started_free" data-plan="basic">Get Started Free</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <h3 data-key="essential_tier_title">Essential Legacy</h3>
+                            <p data-key="essential_tier_desc">Expanded storage, custom AI persona, multi-language support, mood-based search.</p>
+                            <p class="display-4 fw-bold">$15/mo</p>
+                            <div id="googlepay-button-container-essential"></div>
+                            <button id="applepay-button-essential" class="apple-pay-button" style="display: none;"></button>
+                            <div class="paypal-buttons-container" id="paypal-essential"></div>
+                            <div class="card-fields-container" id="card-fields-essential">
+                                <div class="card-field">
+                                    <label for="card-number-essential">Card Number</label>
+                                    <div id="card-number-essential" class="card-field-input"></div>
+                                </div>
+                                <div class="card-field">
+                                    <label for="card-expiry-essential">Expiration Date</label>
+                                    <div id="card-expiry-essential" class="card-field-input"></div>
+                                </div>
+                                <div class="card-field">
+                                    <label for="card-cvv-essential">CVV</label>
+                                    <div id="card-cvv-essential" class="card-field-input"></div>
+                                </div>
+                                <button class="card-submit-button" id="card-submit-essential">Pay with Card</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <h3 data-key="family_tier_title">Family Legacy Plus</h3>
+                            <p data-key="family_tier_desc">Shared archives, collaborative scrapbooks, unlimited AI interactions, family games.</p>
+                            <p class="display-4 fw-bold">$39/mo</p>
+                            <div id="googlepay-button-container-family"></div>
+                            <button id="applepay-button-family" class="apple-pay-button" style="display: none;"></button>
+                            <div class="paypal-buttons-container" id="paypal-family"></div>
+                            <div class="card-fields-container" id="card-fields-family">
+                                <div class="card-field">
+                                    <label for="card-number-family">Card Number</label>
+                                    <div id="card-number-family" class="card-field-input"></div>
+                                </div>
+                                <div class="card-field">
+                                    <label for="card-expiry-family">Expiration Date</label>
+                                    <div id="card-expiry-family" class="card-field-input"></div>
+                                </div>
+                                <div class="card-field">
+                                    <label for="card-cvv-family">CVV</label>
+                                    <div id="card-cvv-family" class="card-field-input"></div>
+                                </div>
+                                <button class="card-submit-button" id="card-submit-family">Pay with Card</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <h3 data-key="lifetime_tier_title">Lifetime Legacy Vault</h3>
+                            <p data-key="lifetime_tier_desc">Unlimited storage, AI legacy book, priority support, scheduled messages, and **exclusive VIP family support with personalized AI memory curations.**</p>
+                            <p class="display-4 fw-bold">$299</p>
+                            <button class="btn btn-outline-joyful plan-button" data-key="buy_now" data-plan="lifetime">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <h3 data-key="one_time_title">Premium Enhancements</h3>
+                <p data-key="one_time_desc">Add unique features to your joyful legacy.</p>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <p data-key="storybook_purchase">AI Storybook ($99)</p>
+                        <button class="btn btn-outline-joyful" data-key="buy_now">Buy Now</button>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <p data-key="time_capsule_purchase">Time Capsule ($49)</p>
+                        <button class="btn btn-outline-joyful" data-key="buy_now">Buy Now</button>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <p data-key="video_message_purchase">Legacy Video ($79)</p>
+                        <button class="btn btn-outline-joyful" data-key="buy_now">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <h3 data-key="business_creator_title">For Businesses & Creators</h3>
+                <p data-key="business_creator_desc">Preserve brand stories or create unique AI personas.</p>
+                <p data-key="business_plan">Business Plan: $499/year</p>
+                <p data-key="creator_plan">Creator Plan: $99 setup + $25/mo</p>
+                <p data-key="community_plan">Community Vault: $149/year</p>
+                <button class="btn btn-joyful" data-key="contact_sales">Contact Sales</button>
+            </div>
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Your subscription was successful! Welcome to Legacy AI!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span id="errorMessage"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="infoMessageContainer" class="mt-3"></div>
+        </div>
+    </section>
+    <section id="client-portal" class="page-section">
+        <div class="container py-5 px-3">
+            <div class="client-portal-section" id="login-form">
+                <h2 class="text-center mb-4 fs-3" data-key="login_title">Joyful Portal Login</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="clientEmail" class="form-label" data-key="email_label">Email</label>
+                        <input type="email" class="form-control" id="clientEmail" data-placeholder-key="email_input_placeholder" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="clientPassword" class="form-label" data-key="password_label">Password</label>
+                        <input type="password" class="form-control" id="clientPassword" data-placeholder-key="password_input_placeholder" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-joyful w-100" data-key="login_button">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="#" data-key="forgot_password">Forgot Password?</a>
+                    </div>
+                    <div id="loginError" class="alert alert-danger mt-3 d-none"></div>
+                </form>
+            </div>
+            <div class="client-portal-dashboard" id="dashboard-content">
+                <h2 class="mb-4" data-key="welcome_user">Welcome, <span id="userName"></span>!</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="happy_timeline_title" class="fs-5">Your Happy Timeline</h4>
+                            <p data-key="happy_timeline_desc">Add milestones, firsts, and joyful moments to your digital scrapbook.</p>
+                            <button class="btn btn-joyful" data-key="add_milestone" id="addMilestoneButton">Add Milestone</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="bucket_list_title" class="fs-5">Family Bucket List</h4>
+                            <p data-key="bucket_list_desc">Set shared goals like trips or fun activities and track progress!</p>
+                            <input type="text" class="form-control mb-2" id="goalInput" data-placeholder-key="add_goal_placeholder" placeholder="Add a goal...">
+                            <button class="btn btn-joyful" data-key="add_goal" id="addGoalButton">Add Goal</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="storytelling_mode_title" class="fs-5">AI Storytelling Adventure</h4>
+                            <p data-key="storytelling_mode_desc">Your co-pilot in crafting your family’s unique journey, creating fun, fictional stories with your loved ones as heroes!</p>
+                            <div class="mb-3">
+                                <label for="storyCharacters" class="form-label" data-key="story_characters_label">Who are the main characters?</label>
+                                <input type="text" class="form-control" id="storyCharacters" data-placeholder-key="story_characters_placeholder" placeholder="e.g., Mom, Dad, Lily, our dog Sparky">
+                            </div>
+                            <div class="mb-3">
+                                <label for="storyTheme" class="form-label" data-key="story_theme_label">Choose a theme:</label>
+                                <select class="form-select" id="storyTheme">
+                                    <option value="" data-key="select_theme_option">Select a theme</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="mystery">Mystery</option>
+                                    <option value="comedy">Comedy</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-joyful" data-key="generate_story" id="generateStoryButton">Generate Story</button>
+                            <div id="storyOutput" class="mt-3 p-3 border rounded" style="display: none;"></div>
+                            <div class="d-flex justify-content-center mt-3" id="storyActions" style="display: none;">
+                                <button class="btn btn-outline-joyful me-2" id="saveStoryButton">Save Story</button>
+                                <button class="btn btn-outline-joyful me-2" id="shareStoryButton">Share Story</button>
+                                <button class="btn btn-outline-joyful" id="regenerateStoryButton">Regenerate Story</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="challenge_response_title" class="fs-5">Respond to Challenges</h4>
+                            <p data-key="challenge_response_desc">View and respond to family challenges.</p>
+                            <button class="btn btn-joyful" data-key="view_challenges">View Challenges</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="account_settings_title" class="fs-5">Account Settings</h4>
+                            <p data-key="account_settings_desc">Manage your profile, subscription, and preferences.</p>
+                            <button class="btn btn-joyful" data-key="manage_settings">Manage Settings</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card p-4">
+                            <h4 data-key="contact_support_title" class="fs-5">Support</h4>
+                            <p data-key="contact_support_desc">Get help or provide feedback.</p>
+                            <button class="btn btn-joyful" data-key="contact_us">Contact Us</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-3">
+                    <a href="#" class="btn btn-outline-secondary" id="logoutButton" data-key="logout_button">Logout</a>
+                </p>
+            </div>
+            <div id="demo-content" class="text-center mt-5">
+                <h2 data-key="demo_timeline_title">Preview a Happy Timeline</h2>
+                <p data-key="demo_timeline_desc">See how Legacy AI brings memories to life!</p>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-4">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/YOUR_FIREBASE_STORAGE_BUCKET/o/images%2Fdemo-timeline-1.jpg?alt=media" alt="Memory 1" class="img-fluid rounded shadow" loading="lazy">
+                        <p class="mt-2 text-muted">#BirthdayJoy</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/YOUR_FIREBASE_STORAGE_BUCKET/o/images%2Fdemo-timeline-2.jpg?alt=media" alt="Memory 2" class="img-fluid rounded shadow" loading="lazy">
+                        <p class="mt-2 text-muted">#FamilyAdventure</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <audio controls class="w-100" id="demoAudioPlayer">
+                            <source src="https://firebasestorage.googleapis.com/v0/b/YOUR_FIREBASE_STORAGE_BUCKET/o/audio%2Fdemo-voice-note.mp3?alt=media" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="mt-2 text-muted">#Laughter #Wisdom</p>
+                    </div>
+                </div>
+                <p class="text-center mt-3">
+                    <a href="#" data-page="client-portal" class="btn btn-joyful" data-key="login_to_create">Login to Create Your Own</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <footer class="footer py-4 mt-5">
+        <div class="container text-center">
+            <p>© <span id="current-year"></span> Legacy AI. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
