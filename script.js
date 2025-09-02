@@ -629,3 +629,24 @@ document.addEventListener('DOMContentLoaded', () => {
     initCardFields('card-fields-family', 'card-submit-family', '39.00', 'Family Plus');
     document.getElementById('current-year').textContent = new Date().getFullYear();
 });
+// Firebase Authentication Signup
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const errorDiv = document.getElementById('signupError');
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed up successfully
+            showToast('Sign up successful! Welcome to Legacy AI.');
+            document.getElementById('signupModal').modal('hide');
+            document.getElementById('signupForm').reset();
+            errorDiv.style.display = 'none';
+        })
+        .catch((error) => {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
+        });
+});
+
