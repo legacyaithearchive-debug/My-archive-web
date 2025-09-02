@@ -431,3 +431,19 @@ font-weight: bold;
 background-color: #e63946;
 
 }
+/* Signup Modal */
+#signupModal .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+}
+#signupModal .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+#signupModal .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+#signupError {
+    font-size: 0.9rem;
+  }
