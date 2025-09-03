@@ -1,4 +1,6 @@
-﻿// Google Analytics
+console.log("script.js is loaded and running");
+
+// Google Analytics
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
@@ -649,6 +651,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
             errorDiv.style.display = 'block';
         });
 });
+
 
 
 
