@@ -1,16 +1,16 @@
-                                console.log("script.js is loaded and running");
+console.log("script.js is loaded and running");
 
 // Google Analytics
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-MS0YD9EVD3');
-https://legacy-ai-e73bf.firebasestorage.app
+
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AlzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw"
-    authDomain: "legacy-ai-e73bf.firebaseapp.com"
-    projectId: "legacy-ai-e73bf"
+    apiKey: "AlzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw",
+    authDomain: "legacy-ai-e73bf.firebaseapp.com",
+    projectId: "legacy-ai-e73bf",
     storageBucket: "legacy-ai-e73bf.firebasestorage.app",
     messagingSenderId: "1061886372313",
     appId: "1:1061886372313:web:5de6dfdfae562f90a451c8"
@@ -18,6 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+console.log("Firebase initialized successfully");
 const authService = firebase.auth();
 const firestore = firebase.firestore();
 const storageService = firebase.storage();
@@ -127,7 +128,9 @@ const translations = {
         email_required: "Please enter your email address.",
         password_reset_sent: "Password reset email sent! Check your inbox.",
         login_required: "Please log in to record a...",
-        current_plan: "You're on {{planName}} 💛"
+        current_plan: "You're on {{planName}} 💛",
+        signup_success: "Signup successful! Please log in.",
+        signup_failed: "Signup failed:"
     },
 };
 
@@ -183,6 +186,7 @@ document.querySelectorAll('a[data-page]').forEach(link => {
 
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    console.log("Login form submitted");
     const email = document.getElementById('clientEmail').value;
     const password = document.getElementById('clientPassword').value;
     try {
@@ -200,6 +204,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 document.getElementById('logoutButton').addEventListener('click', async function(e) {
     e.preventDefault();
+    console.log("Logout button clicked");
     try {
         await authService.signOut();
         showToast('Logged out successfully!', 'info');
@@ -213,6 +218,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
 document.querySelector('[data-key="forgot_password"]').addEventListener('click', async function(e) {
     e.preventDefault();
+    console.log("Forgot password clicked");
     const email = document.getElementById('clientEmail').value;
     if (email) {
         try {
@@ -227,7 +233,26 @@ document.querySelector('[data-key="forgot_password"]').addEventListener('click',
     }
 });
 
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    console.log("Signup form submitted");
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    try {
+        await authService.createUserWithEmailAndPassword(email, password);
+        showToast(translations[currentLang].signup_success, 'success');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+        if (modal) modal.hide();
+        document.getElementById('signupError').style.display = 'none';
+    } catch (error) {
+        document.getElementById('signupError').textContent = `${translations[currentLang].signup_failed} ${error.message}`;
+        document.getElementById('signupError').style.display = 'block';
+        console.error('Signup error:', error);
+    }
+});
+
 async function updatePlanStatus(userId) {
+    console.log("Updating plan status for user:", userId);
     const planStatusElement = document.getElementById('plan-status');
     try {
         const userDoc = await firestore.collection('users').doc(userId).get();
@@ -245,6 +270,7 @@ async function updatePlanStatus(userId) {
 }
 
 async function uploadFile(file, type, emotionTagsInputId, progressBarId, progressContainerId) {
+    console.log("Uploading file:", file.name);
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
@@ -288,6 +314,7 @@ async function uploadFile(file, type, emotionTagsInputId, progressBarId, progres
 }
 
 document.getElementById('uploadPhotoButton').addEventListener('click', function() {
+    console.log("Upload photo button clicked");
     const fileInput = document.getElementById('uploadPhotoInput');
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
@@ -300,6 +327,7 @@ document.getElementById('uploadPhotoButton').addEventListener('click', function(
 });
 
 document.getElementById('uploadVideoButton').addEventListener('click', function() {
+    console.log("Upload video button clicked");
     const fileInput = document.getElementById('uploadVideoInput');
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
@@ -312,6 +340,7 @@ document.getElementById('uploadVideoButton').addEventListener('click', function(
 });
 
 document.getElementById('recordVoiceButton').addEventListener('click', async function() {
+    console.log("Record voice button clicked");
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
@@ -365,6 +394,7 @@ document.getElementById('recordVoiceButton').addEventListener('click', async fun
 });
 
 document.getElementById('stopRecordingButton').addEventListener('click', function() {
+    console.log("Stop recording button clicked");
     if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
@@ -373,6 +403,7 @@ document.getElementById('stopRecordingButton').addEventListener('click', functio
 
 document.querySelectorAll('[data-challenge-id]').forEach(button => {
     button.addEventListener('click', async function() {
+        console.log("Challenge button clicked:", this.dataset.challengeId);
         if (!authService.currentUser) {
             showToast(translations[currentLang].login_required, 'error');
             return;
