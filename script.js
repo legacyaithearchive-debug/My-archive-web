@@ -2,15 +2,13 @@ console.log("script.js is loaded and running");
 
 // Google Analytics
 window.dataLayer = window.dataLayer || [];
-function gtag() {
-    dataLayer.push(arguments);
-}
+function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
 gtag('config', 'G-MS0YD9EVD3');
 
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", // Replace with your actual API key
+    apiKey: "YOUR_ACTUAL_API_KEY", // Replace with your actual Firebase API key from Firebase Console
     authDomain: "legacy-ai-e73bf.firebaseapp.com",
     projectId: "legacy-ai-e73bf",
     storageBucket: "legacy-ai-e73bf.firebasestorage.app",
@@ -19,8 +17,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-console.log("Firebase initialized successfully");
+try {
+    firebase.initializeApp(firebaseConfig);
+    console.log("Firebase initialized successfully");
+} catch (error) {
+    console.error("Firebase initialization failed:", error);
+}
 const authService = firebase.auth();
 const firestore = firebase.firestore();
 const storageService = firebase.storage();
@@ -55,7 +57,77 @@ function showToast(message, type = 'info') {
 // Translations
 const translations = {
     en: {
-        // ... (keep existing translations)
+        home_title: "Capture Life’s Joyful Moments with Legacy AI",
+        home_lead: "Relive the past, celebrate the present, and shape the future with AI-curated happiness. Create Together, Reminisce Forever: Build vibrant digital scrapbooks and happy timelines for generations.",
+        get_started_free: "Get Started Free",
+        download_joyful_guide: "Download Joyful Memory Guide",
+        how_it_works_title: "How Legacy AI Spreads Joy",
+        capture_moments_step: "1. Capture Happy Moments",
+        capture_moments_desc: "Upload photos, videos, and voice notes of birthdays, trips, and everyday joys.",
+        create_adventures_step: "2. Create Family Adventures",
+        create_adventures_desc: "AI crafts interactive stories and games starring your loved ones.",
+        build_timeline_step: "3. Build a Happy Timeline",
+        build_timeline_desc: "Organize milestones into a vibrant digital scrapbook for all to cherish.",
+        moments_title: "Moments That Matter",
+        moments_intro: "Relive the joy of birthdays, family trips, inside jokes, and everyday moments. Upload your happiest memories to create a digital scrapbook that sparks smiles.",
+        upload_photos_title: "Photos of Joy",
+        upload_photos_desc: "Share snapshots of laughter and love.",
+        record_voice_title: "Voice Notes",
+        record_voice_desc: "Capture jokes, songs, or heartfelt messages.",
+        share_videos_title: "Happy Videos",
+        share_videos_desc: "Upload clips of celebrations and adventures.",
+        emotion_tag_placeholder: "Tag emotions or themes (e.g., #joyful, #adventure)",
+        upload_now: "Upload Now",
+        record_now: "Record Now",
+        stop_recording: "Stop Recording",
+        upload_failed: "Upload failed:",
+        upload_success: "Voice note uploaded successfully! MP3 conversion in progress.",
+        mp3_conversion_failed: "Voice note uploaded, but MP3 conversion failed. Playing WebM.",
+        microphone_error: "Microphone access denied or unavailable: ",
+        challenges_title: "Interactive Family Challenges",
+        challenges_intro: "Bring your family closer with fun prompts that create joyful memories. Complete challenges and build a positive archive together!",
+        funny_question_title: "Funny Question Challenge",
+        funny_question_desc: "Ask your grandparents one hilarious question today and record their answer!",
+        dance_off_title: "Family Dance-Off",
+        dance_off_desc: "Record a 60-second family dance-off and share the fun!",
+        childhood_memory_title: "Childhood Memory Story",
+        childhood_memory_desc: "Share a 60-second story of your happiest childhood moment.",
+        start_challenge: "Submit Response",
+        pricing_title: "Choose Your Joyful Plan",
+        pricing_intro: "Start free or unlock premium features to create unforgettable family memories.",
+        free_tier_title: "Basic Legacy",
+        free_tier_desc: "Limited text & photo archive, AI memory highlights, 5 AI interactions/month.",
+        essential_tier_title: "Essential Legacy",
+        essential_tier_desc: "Expanded storage, custom AI persona, multi-language support, mood-based search.",
+        family_tier_title: "Family Legacy Plus",
+        family_tier_desc: "Shared archives, collaborative scrapbooks, unlimited AI interactions, family games.",
+        lifetime_tier_title: "Lifetime Legacy Vault",
+        lifetime_tier_desc: "Unlimited storage, AI legacy book, priority support, scheduled messages, and **exclusive VIP family support with personalized AI memory curations.**",
+        buy_now: "Buy Now",
+        one_time_title: "Premium Enhancements",
+        one_time_desc: "Add unique features to your joyful legacy.",
+        storybook_purchase: "AI Storybook ($99)",
+        time_capsule_purchase: "Time Capsule ($49)",
+        video_message_purchase: "Legacy Video ($79)",
+        business_creator_title: "For Businesses & Creators",
+        business_creator_desc: "Preserve brand stories or create unique AI personas.",
+        business_plan: "Business Plan: $499/year",
+        creator_plan: "Creator Plan: $99 setup + $25/mo",
+        community_plan: "Community Vault: $149/year",
+        contact_sales: "Contact Sales",
+        login_title: "Joyful Portal Login",
+        email_label: "Email",
+        email_input_placeholder: "Email",
+        password_label: "Password",
+        password_input_placeholder: "Password",
+        login_button: "Login",
+        forgot_password: "Forgot Password?",
+        email_required: "Please enter your email address.",
+        password_reset_sent: "Password reset email sent! Check your inbox.",
+        login_required: "Please log in to access this feature.",
+        current_plan: "You're on {{planName}} 💛",
+        signup_success: "Signup successful! Please log in.",
+        signup_failed: "Signup failed:"
     }
 };
 
@@ -75,10 +147,12 @@ function applyTranslations() {
 }
 
 document.querySelectorAll('.dropdown-item[data-lang]').forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.preventDefault();
-        currentLang = this.getAttribute('data-lang');
-        applyTranslations();
+    ['click', 'touchstart'].forEach(eventType => {
+        item.addEventListener(eventType, function(e) {
+            e.preventDefault();
+            currentLang = this.getAttribute('data-lang');
+            applyTranslations();
+        });
     });
 });
 
@@ -87,27 +161,31 @@ applyTranslations();
 // Auth State Listener
 authService.onAuthStateChanged(user => {
     console.log("Auth state changed:", user ? user.uid : "No user");
+    const loginForm = document.getElementById('login-form');
+    const dashboardContent = document.getElementById('dashboard-content');
     if (user && window.location.hash === '#client-portal') {
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('dashboard-content').style.display = 'block';
+        loginForm.style.display = 'none';
+        dashboardContent.style.display = 'block';
         document.getElementById('userName').textContent = user.email;
         updatePlanStatus(user.uid);
-    } else {
-        document.getElementById('login-form').style.display = 'block';
-        document.getElementById('dashboard-content').style.display = 'none';
+    } else if (window.location.hash === '#client-portal') {
+        loginForm.style.display = 'block';
+        dashboardContent.style.display = 'none';
     }
 });
 
 // Page Navigation
 document.querySelectorAll('a[data-page]').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.page-section').forEach(section => {
-            section.classList.remove('active');
+    ['click', 'touchstart'].forEach(eventType => {
+        link.addEventListener(eventType, function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            const targetPage = this.getAttribute('data-page');
+            document.getElementById(targetPage).classList.add('active');
+            window.location.hash = targetPage;
         });
-        const targetPage = this.getAttribute('data-page');
-        document.getElementById(targetPage).classList.add('active');
-        window.location.hash = targetPage;
     });
 });
 
@@ -122,6 +200,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         await authService.signInWithEmailAndPassword(email, password);
         showToast('Logged in successfully!', 'success');
         loginError.style.display = 'none';
+        loginError.classList.add('d-none');
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('dashboard-content').style.display = 'block';
         document.getElementById('userName').textContent = authService.currentUser.email;
@@ -129,6 +208,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     } catch (error) {
         loginError.textContent = `Login failed: ${error.message}`;
         loginError.style.display = 'block';
+        loginError.classList.remove('d-none');
         showToast(`Login failed: ${error.message}`, 'error');
         console.error('Login error:', error);
     }
@@ -173,15 +253,16 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     console.log("Signup form submitted");
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
+    const signupError = document.getElementById('signupError');
     try {
         await authService.createUserWithEmailAndPassword(email, password);
         showToast(translations[currentLang].signup_success, 'success');
         const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
         if (modal) modal.hide();
-        document.getElementById('signupError').style.display = 'none';
+        signupError.style.display = 'none';
     } catch (error) {
-        document.getElementById('signupError').textContent = `${translations[currentLang].signup_failed} ${error.message}`;
-        document.getElementById('signupError').style.display = 'block';
+        signupError.textContent = `${translations[currentLang].signup_failed} ${error.message}`;
+        signupError.style.display = 'block';
         console.error('Signup error:', error);
     }
 });
@@ -251,8 +332,17 @@ async function uploadFile(file, type, emotionTagsInputId, progressBarId, progres
     );
 }
 
+// Photo Upload
 document.getElementById('uploadPhotoButton').addEventListener('click', function() {
-    console.log("Upload photo button clicked");
+    handleUploadPhoto();
+});
+document.getElementById('uploadPhotoButton').addEventListener('touchstart', function(e) {
+    e.preventDefault(); // Prevent default touch behavior
+    handleUploadPhoto();
+});
+
+function handleUploadPhoto() {
+    console.log("Upload photo button activated");
     const fileInput = document.getElementById('uploadPhotoInput');
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
@@ -262,10 +352,19 @@ document.getElementById('uploadPhotoButton').addEventListener('click', function(
     } else {
         showToast('Please select a photo to upload.', 'info');
     }
+}
+
+// Video Upload
+document.getElementById('uploadVideoButton').addEventListener('click', function() {
+    handleUploadVideo();
+});
+document.getElementById('uploadVideoButton').addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    handleUploadVideo();
 });
 
-document.getElementById('uploadVideoButton').addEventListener('click', function() {
-    console.log("Upload video button clicked");
+function handleUploadVideo() {
+    console.log("Upload video button activated");
     const fileInput = document.getElementById('uploadVideoInput');
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
@@ -275,11 +374,19 @@ document.getElementById('uploadVideoButton').addEventListener('click', function(
     } else {
         showToast('Please select a video to upload.', 'info');
     }
-});
+}
 
 // Voice Recording
-document.getElementById('recordVoiceButton').addEventListener('click', async function() {
-    console.log("Record voice button clicked");
+document.getElementById('recordVoiceButton').addEventListener('click', function() {
+    handleRecordVoice();
+});
+document.getElementById('recordVoiceButton').addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    handleRecordVoice();
+});
+
+async function handleRecordVoice() {
+    console.log("Record voice button activated");
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
@@ -309,6 +416,8 @@ document.getElementById('recordVoiceButton').addEventListener('click', async fun
             recordingTimer.style.display = 'none';
             document.getElementById('recordVoiceButton').style.display = 'block';
             document.getElementById('stopRecordingButton').style.display = 'none';
+            mediaRecorder = null;
+            audioChunks = [];
         };
         mediaRecorder.start();
         recordingStartTime = Date.now();
@@ -326,66 +435,105 @@ document.getElementById('recordVoiceButton').addEventListener('click', async fun
         showToast(`${translations[currentLang].microphone_error} ${error.message}`, 'error');
         console.error("Microphone access error:", error);
     }
-});
+}
 
 document.getElementById('stopRecordingButton').addEventListener('click', function() {
-    console.log("Stop recording button clicked");
+    handleStopRecording();
+});
+document.getElementById('stopRecordingButton').addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    handleStopRecording();
+});
+
+function handleStopRecording() {
+    console.log("Stop recording button activated");
     if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
         mediaRecorder = null;
         audioChunks = [];
     }
-});
+}
 
 // Challenge Submissions
 document.querySelectorAll('[data-challenge-id]').forEach(button => {
-    button.addEventListener('click', async function() {
-        console.log("Challenge button clicked:", this.dataset.challengeId);
-        if (!authService.currentUser) {
-            showToast(translations[currentLang].login_required, 'error');
-            return;
-        }
-        const challengeId = this.dataset.challengeId;
-        let responseData = {};
-        switch (challengeId) {
-            case 'funny-question':
-                responseData.answer = document.getElementById('funnyQuestionResponse').value;
-                if (!responseData.answer) {
-                    showToast('Please enter an answer for the funny question challenge.', 'info');
-                    return;
-                }
-                break;
-            case 'dance-off':
-                const videoFile = document.getElementById('danceOffVideoInput').files[0];
-                if (!videoFile) {
-                    showToast('Please upload a video for the dance-off challenge.', 'info');
-                    return;
-                }
-                await uploadFile(videoFile, 'challenge_video', '', 'videoProgressBar', 'videoProgressContainer');
-                responseData.videoUploaded = true;
-                break;
-            case 'childhood-memory':
-                responseData.story = document.getElementById('childhoodMemoryResponse').value;
-                if (!responseData.story) {
-                    showToast('Please enter your story for the childhood memory challenge.', 'info');
-                    return;
-                }
-                break;
-        }
-        try {
-            await firestore.collection('users').doc(authService.currentUser.uid).collection('challenges').add({
-                challengeId: challengeId,
-                responseData: responseData,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            showToast('Challenge response submitted!', 'success');
-            if (challengeId === 'funny-question') document.getElementById('funnyQuestionResponse').value = '';
-            if (challengeId === 'dance-off') document.getElementById('danceOffVideoInput').value = '';
-            if (challengeId === 'childhood-memory') document.getElementById('childhoodMemoryResponse').value = '';
-        } catch (error) {
-            showToast(`Challenge submission failed: ${error.message}`, 'error');
-            console.error('Challenge submission error:', error);
-        }
+    ['click', 'touchstart'].forEach(eventType => {
+        button.addEventListener(eventType, async function(e) {
+            e.preventDefault();
+            console.log("Challenge button activated:", this.dataset.challengeId);
+            if (!authService.currentUser) {
+                showToast(translations[currentLang].login_required, 'error');
+                return;
+            }
+            const challengeId = this.dataset.challengeId;
+            let responseData = {};
+            switch (challengeId) {
+                case 'funny-question':
+                    responseData.answer = document.getElementById('funnyQuestionResponse').value;
+                    if (!responseData.answer) {
+                        showToast('Please enter an answer for the funny question challenge.', 'info');
+                        return;
+                    }
+                    break;
+                case 'dance-off':
+                    const videoFile = document.getElementById('danceOffVideoInput').files[0];
+                    if (!videoFile) {
+                        showToast('Please upload a video for the dance-off challenge.', 'info');
+                        return;
+                    }
+                    await uploadFile(videoFile, 'challenge_video', '', 'videoProgressBar', 'videoProgressContainer');
+                    responseData.videoUploaded = true;
+                    break;
+                case 'childhood-memory':
+                    responseData.story = document.getElementById('childhoodMemoryResponse').value;
+                    if (!responseData.story) {
+                        showToast('Please enter your story for the childhood memory challenge.', 'info');
+                        return;
+                    }
+                    break;
+            }
+            try {
+                await firestore.collection('users').doc(authService.currentUser.uid).collection('challenges').add({
+                    challengeId: challengeId,
+                    responseData: responseData,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showToast('Challenge response submitted!', 'success');
+                if (challengeId === 'funny-question') document.getElementById('funnyQuestionResponse').value = '';
+                if (challengeId === 'dance-off') document.getElementById('danceOffVideoInput').value = '';
+                if (challengeId === 'childhood-memory') document.getElementById('childhoodMemoryResponse').value = '';
+            } catch (error) {
+                showToast(`Challenge submission failed: ${error.message}`, 'error');
+                console.error('Challenge submission error:', error);
+            }
+        });
     });
 });
+
+// Placeholder for Payment Buttons (Implement as needed)
+function initializePaymentButtons() {
+    console.log("Initializing payment buttons (placeholder)");
+    // Add PayPal, Google Pay, Apple Pay logic here
+    // Example for PayPal:
+    /*
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: { value: '15.00' } // Example for Essential Legacy
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                showToast('Payment successful!', 'success');
+            });
+        }
+    }).render('#paypal-essential');
+    */
+}
+
+window.onload = function() {
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    initializePaymentButtons();
+};
