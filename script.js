@@ -2,13 +2,15 @@ console.log("script.js is loaded and running");
 
 // Google Analytics
 window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
+function gtag() {
+    dataLayer.push(arguments);
+}
 gtag('js', new Date());
 gtag('config', 'G-MS0YD9EVD3');
 
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AlzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw",
+    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", // Replace with your actual API key
     authDomain: "legacy-ai-e73bf.firebaseapp.com",
     projectId: "legacy-ai-e73bf",
     storageBucket: "legacy-ai-e73bf.firebasestorage.app",
@@ -27,20 +29,14 @@ let audioChunks = [];
 let audioBlob = null;
 let recordingTimerInterval = null;
 let recordingStartTime = 0;
-let currentLang = 'en'; // Default language
+let currentLang = 'en';
 
-// Function to display toast notifications
+// Toast Notification
 function showToast(message, type = 'info') {
     const toastContainer = document.querySelector('.toast-container');
     const toast = document.createElement('div');
     toast.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
-    if (type === 'success') {
-        toast.classList.add('bg-success');
-    } else if (type === 'error') {
-        toast.classList.add('bg-danger');
-    } else {
-        toast.classList.add('bg-info');
-    }
+    toast.classList.add(type === 'success' ? 'bg-success' : type === 'error' ? 'bg-danger' : 'bg-info');
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
     toast.setAttribute('aria-atomic', 'true');
@@ -53,85 +49,14 @@ function showToast(message, type = 'info') {
     toastContainer.appendChild(toast);
     const bootstrapToast = new bootstrap.Toast(toast, { delay: 3000 });
     bootstrapToast.show();
-    toast.addEventListener('hidden.bs.toast', () => {
-        toast.remove();
-    });
+    toast.addEventListener('hidden.bs.toast', () => toast.remove());
 }
 
+// Translations
 const translations = {
     en: {
-        home_title: "Capture Life’s Joyful Moments with Legacy AI",
-        home_lead: "Relive the past, celebrate the present, and shape the future with AI-curated happiness. Create Together, Reminisce Forever: Build vibrant digital scrapbooks and happy timelines for generations.",
-        get_started_free: "Get Started Free",
-        download_joyful_guide: "Download Joyful Memory Guide",
-        how_it_works_title: "How Legacy AI Spreads Joy",
-        capture_moments_step: "1. Capture Happy Moments",
-        capture_moments_desc: "Upload photos, videos, and voice notes of birthdays, trips, and everyday joys.",
-        create_adventures_step: "2. Create Family Adventures",
-        create_adventures_desc: "AI crafts interactive stories and games starring your loved ones.",
-        build_timeline_step: "3. Build a Happy Timeline",
-        build_timeline_desc: "Organize milestones into a vibrant digital scrapbook for all to cherish.",
-        moments_title: "Moments That Matter",
-        moments_intro: "Relive the joy of birthdays, family trips, inside jokes, and everyday moments. Upload your happiest memories to create a digital scrapbook that sparks smiles.",
-        upload_photos_title: "Photos of Joy",
-        upload_photos_desc: "Share snapshots of laughter and love.",
-        record_voice_title: "Voice Notes",
-        record_voice_desc: "Capture jokes, songs, or heartfelt messages.",
-        share_videos_title: "Happy Videos",
-        share_videos_desc: "Upload clips of celebrations and adventures.",
-        emotion_tag_placeholder: "Tag emotions or themes (e.g., #joyful, #adventure)",
-        upload_now: "Upload Now",
-        record_now: "Record Now",
-        stop_recording: "Stop Recording",
-        upload_failed: "Upload failed:",
-        upload_success: "Voice note uploaded successfully! MP3 conversion in progress.",
-        mp3_conversion_failed: "Voice note uploaded, but MP3 conversion failed. Playing WebM.",
-        microphone_error: "Microphone access denied or unavailable: ",
-        challenges_title: "Interactive Family Challenges",
-        challenges_intro: "Bring your family closer with fun prompts that create joyful memories. Complete challenges and build a positive archive together!",
-        funny_question_title: "Funny Question Challenge",
-        funny_question_desc: "Ask your grandparents one hilarious question today and record their answer!",
-        dance_off_title: "Family Dance-Off",
-        dance_off_desc: "Record a 60-second family dance-off and share the fun!",
-        childhood_memory_title: "Childhood Memory Story",
-        childhood_memory_desc: "Share a 60-second story of your happiest childhood moment.",
-        start_challenge: "Submit Response",
-        pricing_title: "Choose Your Joyful Plan",
-        pricing_intro: "Start free or unlock premium features to create unforgettable family memories.",
-        free_tier_title: "Basic Legacy",
-        free_tier_desc: "Limited text & photo archive, AI memory highlights, 5 AI interactions/month.",
-        essential_tier_title: "Essential Legacy",
-        essential_tier_desc: "Expanded storage, custom AI persona, multi-language support, mood-based search.",
-        family_tier_title: "Family Legacy Plus",
-        family_tier_desc: "Shared archives, collaborative scrapbooks, unlimited AI interactions, family games.",
-        lifetime_tier_title: "Lifetime Legacy Vault",
-        lifetime_tier_desc: "Unlimited storage, AI legacy book, priority support, scheduled messages, and **exclusive VIP family support with personalized AI memory curations.**",
-        buy_now: "Buy Now",
-        one_time_title: "Premium Enhancements",
-        one_time_desc: "Add unique features to your joyful legacy.",
-        storybook_purchase: "AI Storybook ($99)",
-        time_capsule_purchase: "Time Capsule ($49)",
-        video_message_purchase: "Legacy Video ($79)",
-        business_creator_title: "For Businesses & Creators",
-        business_creator_desc: "Preserve brand stories or create unique AI personas.",
-        business_plan: "Business Plan: $499/year",
-        creator_plan: "Creator Plan: $99 setup + $25/mo",
-        community_plan: "Community Vault: $149/year",
-        contact_sales: "Contact Sales",
-        login_title: "Joyful Portal Login",
-        email_label: "Email",
-        email_input_placeholder: "Email",
-        password_label: "Password",
-        password_input_placeholder: "Password",
-        login_button: "Login",
-        forgot_password: "Forgot Password?",
-        email_required: "Please enter your email address.",
-        password_reset_sent: "Password reset email sent! Check your inbox.",
-        login_required: "Please log in to record a...",
-        current_plan: "You're on {{planName}} 💛",
-        signup_success: "Signup successful! Please log in.",
-        signup_failed: "Signup failed:"
-    },
+        // ... (keep existing translations)
+    }
 };
 
 function applyTranslations() {
@@ -159,6 +84,21 @@ document.querySelectorAll('.dropdown-item[data-lang]').forEach(item => {
 
 applyTranslations();
 
+// Auth State Listener
+authService.onAuthStateChanged(user => {
+    console.log("Auth state changed:", user ? user.uid : "No user");
+    if (user && window.location.hash === '#client-portal') {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'block';
+        document.getElementById('userName').textContent = user.email;
+        updatePlanStatus(user.uid);
+    } else {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('dashboard-content').style.display = 'none';
+    }
+});
+
+// Page Navigation
 document.querySelectorAll('a[data-page]').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -167,41 +107,34 @@ document.querySelectorAll('a[data-page]').forEach(link => {
         });
         const targetPage = this.getAttribute('data-page');
         document.getElementById(targetPage).classList.add('active');
-
-        if (targetPage === 'client-portal') {
-            authService.onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('login-form').style.display = 'none';
-                    document.getElementById('dashboard-content').style.display = 'block';
-                    document.getElementById('userName').textContent = user.email;
-                    updatePlanStatus(user.uid);
-                } else {
-                    document.getElementById('login-form').style.display = 'block';
-                    document.getElementById('dashboard-content').style.display = 'none';
-                }
-            });
-        }
+        window.location.hash = targetPage;
     });
 });
 
+// Login
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     console.log("Login form submitted");
     const email = document.getElementById('clientEmail').value;
     const password = document.getElementById('clientPassword').value;
+    const loginError = document.getElementById('loginError');
     try {
         await authService.signInWithEmailAndPassword(email, password);
         showToast('Logged in successfully!', 'success');
+        loginError.style.display = 'none';
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('dashboard-content').style.display = 'block';
         document.getElementById('userName').textContent = authService.currentUser.email;
         updatePlanStatus(authService.currentUser.uid);
     } catch (error) {
+        loginError.textContent = `Login failed: ${error.message}`;
+        loginError.style.display = 'block';
         showToast(`Login failed: ${error.message}`, 'error');
         console.error('Login error:', error);
     }
 });
 
+// Logout
 document.getElementById('logoutButton').addEventListener('click', async function(e) {
     e.preventDefault();
     console.log("Logout button clicked");
@@ -216,6 +149,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
     }
 });
 
+// Forgot Password
 document.querySelector('[data-key="forgot_password"]').addEventListener('click', async function(e) {
     e.preventDefault();
     console.log("Forgot password clicked");
@@ -233,6 +167,7 @@ document.querySelector('[data-key="forgot_password"]').addEventListener('click',
     }
 });
 
+// Signup
 document.getElementById('signupForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     console.log("Signup form submitted");
@@ -251,6 +186,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     }
 });
 
+// Update Plan Status
 async function updatePlanStatus(userId) {
     console.log("Updating plan status for user:", userId);
     const planStatusElement = document.getElementById('plan-status');
@@ -269,21 +205,23 @@ async function updatePlanStatus(userId) {
     }
 }
 
+// File Upload
 async function uploadFile(file, type, emotionTagsInputId, progressBarId, progressContainerId) {
     console.log("Uploading file:", file.name);
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
     }
-
+    if (file.size > 100 * 1024 * 1024) {
+        showToast('File is too large. Maximum size is 100MB.', 'error');
+        return;
+    }
     const storageRef = storageService.ref();
     const fileRef = storageRef.child(`${type}s/${authService.currentUser.uid}/${file.name}`);
     const uploadTask = fileRef.put(file);
-
     const progressBar = document.getElementById(progressBarId);
     const progressContainer = document.getElementById(progressContainerId);
     progressContainer.style.display = 'block';
-
     uploadTask.on('state_changed',
         (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -299,7 +237,7 @@ async function uploadFile(file, type, emotionTagsInputId, progressBarId, progres
             uploadTask.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
                 showToast(`${type} uploaded successfully!`, 'success');
                 progressContainer.style.display = 'none';
-                const emotionTags = document.getElementById(emotionTagsInputId).value;
+                const emotionTags = emotionTagsInputId ? document.getElementById(emotionTagsInputId).value : '';
                 await firestore.collection('users').doc(authService.currentUser.uid).collection(type).add({
                     fileName: file.name,
                     fileType: file.type,
@@ -307,7 +245,7 @@ async function uploadFile(file, type, emotionTagsInputId, progressBarId, progres
                     emotionTags: emotionTags,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                document.getElementById(emotionTagsInputId).value = '';
+                if (emotionTagsInputId) document.getElementById(emotionTagsInputId).value = '';
             });
         }
     );
@@ -339,54 +277,51 @@ document.getElementById('uploadVideoButton').addEventListener('click', function(
     }
 });
 
+// Voice Recording
 document.getElementById('recordVoiceButton').addEventListener('click', async function() {
     console.log("Record voice button clicked");
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
     }
-
+    if (!window.MediaRecorder) {
+        showToast('Your browser does not support voice recording.', 'error');
+        return;
+    }
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorder = new MediaRecorder(stream);
         audioChunks = [];
         let timerSeconds = 0;
         const recordingTimer = document.getElementById('recordingTimer');
-
         mediaRecorder.ondataavailable = (event) => {
             audioChunks.push(event.data);
         };
-
         mediaRecorder.onstop = async () => {
             audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const audioPreview = document.getElementById('audioPreview');
             audioPreview.src = audioUrl;
             audioPreview.style.display = 'block';
-
             const fileName = `voice_note_${new Date().getTime()}.webm`;
-            await uploadFile(audioBlob, 'voice', 'voiceEmotionInput', 'voiceProgressBar', 'voiceProgressContainer');
-
+            await uploadFile(new File([audioBlob], fileName, { type: 'audio/webm' }), 'voice', 'voiceEmotionInput', 'voiceProgressBar', 'voiceProgressContainer');
             clearInterval(recordingTimerInterval);
             recordingTimer.style.display = 'none';
             document.getElementById('recordVoiceButton').style.display = 'block';
             document.getElementById('stopRecordingButton').style.display = 'none';
         };
-
         mediaRecorder.start();
         recordingStartTime = Date.now();
         recordingTimer.textContent = '00:00';
         recordingTimer.style.display = 'block';
         document.getElementById('recordVoiceButton').style.display = 'none';
         document.getElementById('stopRecordingButton').style.display = 'block';
-
         recordingTimerInterval = setInterval(() => {
             timerSeconds = Math.floor((Date.now() - recordingStartTime) / 1000);
             const minutes = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
             const seconds = String(timerSeconds % 60).padStart(2, '0');
             recordingTimer.textContent = `${minutes}:${seconds}`;
         }, 1000);
-
     } catch (error) {
         showToast(`${translations[currentLang].microphone_error} ${error.message}`, 'error');
         console.error("Microphone access error:", error);
@@ -398,9 +333,12 @@ document.getElementById('stopRecordingButton').addEventListener('click', functio
     if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        mediaRecorder = null;
+        audioChunks = [];
     }
 });
 
+// Challenge Submissions
 document.querySelectorAll('[data-challenge-id]').forEach(button => {
     button.addEventListener('click', async function() {
         console.log("Challenge button clicked:", this.dataset.challengeId);
@@ -408,10 +346,8 @@ document.querySelectorAll('[data-challenge-id]').forEach(button => {
             showToast(translations[currentLang].login_required, 'error');
             return;
         }
-
         const challengeId = this.dataset.challengeId;
         let responseData = {};
-
         switch (challengeId) {
             case 'funny-question':
                 responseData.answer = document.getElementById('funnyQuestionResponse').value;
@@ -437,7 +373,6 @@ document.querySelectorAll('[data-challenge-id]').forEach(button => {
                 }
                 break;
         }
-
         try {
             await firestore.collection('users').doc(authService.currentUser.uid).collection('challenges').add({
                 challengeId: challengeId,
