@@ -19,7 +19,9 @@ body {
 .navbar-nav .nav-link {
     padding: 10px 15px;
     font-size: 1.1rem;
-    touch-action: manipulation; /* Improve tap responsiveness */
+    touch-action: manipulation;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 .hero {
@@ -41,6 +43,7 @@ body {
         margin-bottom: 10px;
         font-size: 1rem;
         padding: 12px;
+        min-height: 48px;
     }
 }
 
@@ -60,9 +63,12 @@ body {
     border-color: #ff6b6b;
     color: white;
     font-weight: bold;
-    padding: 12px 20px;
-    font-size: 1.1rem;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    min-height: 48px;
     touch-action: manipulation;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 .btn-joyful:hover, .btn-joyful:active {
@@ -73,9 +79,12 @@ body {
 .btn-outline-joyful {
     color: #ff6b6b;
     border-color: #ff6b6b;
-    padding: 12px 20px;
-    font-size: 1.1rem;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    min-height: 48px;
     touch-action: manipulation;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 .btn-outline-joyful:hover, .btn-outline-joyful:active {
@@ -193,17 +202,16 @@ h2.fs-3 {
 
 .toast-container {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
+    top: 0.5rem;
+    right: 0.5rem;
     z-index: 1050;
+    width: calc(100% - 1rem);
 }
 
-@media (max-width: 576px) {
+@media (min-width: 576px) {
     .toast-container {
-        top: 0.5rem;
-        right: 0.5rem;
-        left: 0.5rem;
-        width: calc(100% - 1rem);
+        width: auto;
+        right: 1rem;
     }
 }
 
@@ -287,6 +295,8 @@ h2.fs-3 {
     cursor: pointer;
     font-weight: bold;
     touch-action: manipulation;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 .card-submit-button:hover, .card-submit-button:active {
@@ -302,9 +312,12 @@ h2.fs-3 {
 #signupModal .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
-    padding: 12px;
-    font-size: 1.1rem;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    min-height: 48px;
     touch-action: manipulation;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 #signupModal .btn-primary:hover, #signupModal .btn-primary:active {
@@ -316,7 +329,9 @@ h2.fs-3 {
     font-size: 0.9rem;
 }
 
-/* Mobile Tap Feedback */
+/* Ensure Touch Feedback */
 button, .btn, a.nav-link, .dropdown-item {
     -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+    z-index: 10;
 }
