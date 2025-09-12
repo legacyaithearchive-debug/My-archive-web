@@ -8,7 +8,7 @@ gtag('config', 'G-MS0YD9EVD3');
 
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", // Replace with your Firebase API key from Firebase Console
+    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", 
     authDomain: "legacy-ai-e73bf.firebaseapp.com",
     projectId: "legacy-ai-e73bf",
     storageBucket: "legacy-ai-e73bf.firebasestorage.app",
@@ -518,3 +518,4 @@ window.onload = function() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
     initializePaymentButtons();
 };
+
