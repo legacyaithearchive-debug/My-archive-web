@@ -8,7 +8,7 @@ gtag('config', 'G-MS0YD9EVD3');
 
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", // Replace with your actual Firebase API key from Firebase Console
+    apiKey: "AIzaSyC6kNJOxcKKSSImQrK3Pdvz2MBWyjV6Klw", // Replace with your Firebase API key from Firebase Console
     authDomain: "legacy-ai-e73bf.firebaseapp.com",
     projectId: "legacy-ai-e73bf",
     storageBucket: "legacy-ai-e73bf.firebasestorage.app",
@@ -35,6 +35,7 @@ let currentLang = 'en';
 
 // Toast Notification
 function showToast(message, type = 'info') {
+    console.log(`Showing toast: ${message} (${type})`);
     const toastContainer = document.querySelector('.toast-container');
     const toast = document.createElement('div');
     toast.classList.add('toast', 'align-items-center', 'text-white', 'border-0');
@@ -132,6 +133,7 @@ const translations = {
 };
 
 function applyTranslations() {
+    console.log("Applying translations for language:", currentLang);
     document.querySelectorAll('[data-key]').forEach(element => {
         const key = element.getAttribute('data-key');
         if (translations[currentLang] && translations[currentLang][key]) {
@@ -147,12 +149,11 @@ function applyTranslations() {
 }
 
 document.querySelectorAll('.dropdown-item[data-lang]').forEach(item => {
-    ['click', 'touchstart'].forEach(eventType => {
-        item.addEventListener(eventType, function(e) {
-            e.preventDefault();
-            currentLang = this.getAttribute('data-lang');
-            applyTranslations();
-        });
+    item.addEventListener('click', function(e) {
+        console.log("Language dropdown clicked:", this.getAttribute('data-lang'));
+        e.preventDefault();
+        currentLang = this.getAttribute('data-lang');
+        applyTranslations();
     });
 });
 
@@ -176,23 +177,22 @@ authService.onAuthStateChanged(user => {
 
 // Page Navigation
 document.querySelectorAll('a[data-page]').forEach(link => {
-    ['click', 'touchstart'].forEach(eventType => {
-        link.addEventListener(eventType, function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            const targetPage = this.getAttribute('data-page');
-            document.getElementById(targetPage).classList.add('active');
-            window.location.hash = targetPage;
+    link.addEventListener('click', function(e) {
+        console.log("Nav link clicked:", this.getAttribute('data-page'));
+        e.preventDefault();
+        document.querySelectorAll('.page-section').forEach(section => {
+            section.classList.remove('active');
         });
+        const targetPage = this.getAttribute('data-page');
+        document.getElementById(targetPage).classList.add('active');
+        window.location.hash = targetPage;
     });
 });
 
 // Login
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
     console.log("Login form submitted");
+    e.preventDefault();
     const email = document.getElementById('clientEmail').value;
     const password = document.getElementById('clientPassword').value;
     const loginError = document.getElementById('loginError');
@@ -216,8 +216,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 // Logout
 document.getElementById('logoutButton').addEventListener('click', async function(e) {
-    e.preventDefault();
     console.log("Logout button clicked");
+    e.preventDefault();
     try {
         await authService.signOut();
         showToast('Logged out successfully!', 'info');
@@ -231,8 +231,8 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
 // Forgot Password
 document.querySelector('[data-key="forgot_password"]').addEventListener('click', async function(e) {
-    e.preventDefault();
     console.log("Forgot password clicked");
+    e.preventDefault();
     const email = document.getElementById('clientEmail').value;
     if (email) {
         try {
@@ -249,8 +249,8 @@ document.querySelector('[data-key="forgot_password"]').addEventListener('click',
 
 // Signup
 document.getElementById('signupForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
     console.log("Signup form submitted");
+    e.preventDefault();
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
     const signupError = document.getElementById('signupError');
@@ -319,31 +319,35 @@ async function uploadFile(file, type, emotionTagsInputId, progressBarId, progres
                 showToast(`${type} uploaded successfully!`, 'success');
                 progressContainer.style.display = 'none';
                 const emotionTags = emotionTagsInputId ? document.getElementById(emotionTagsInputId).value : '';
-                await firestore.collection('users').doc(authService.currentUser.uid).collection(type).add({
-                    fileName: file.name,
-                    fileType: file.type,
-                    downloadURL: downloadURL,
-                    emotionTags: emotionTags,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                if (emotionTagsInputId) document.getElementById(emotionTagsInputId).value = '';
+                try {
+                    await firestore.collection('users').doc(authService.currentUser.uid).collection(type).add({
+                        fileName: file.name,
+                        fileType: file.type,
+                        downloadURL: downloadURL,
+                        emotionTags: emotionTags,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    if (emotionTagsInputId) document.getElementById(emotionTagsInputId).value = '';
+                } catch (error) {
+                    console.error("Firestore write error:", error);
+                    showToast("Failed to save upload metadata.", 'error');
+                }
             });
         }
     );
 }
 
 // Photo Upload
-document.getElementById('uploadPhotoButton').addEventListener('click', function() {
-    handleUploadPhoto();
-});
-document.getElementById('uploadPhotoButton').addEventListener('touchstart', function(e) {
-    e.preventDefault(); // Prevent default touch behavior
+document.getElementById('uploadPhotoButton').addEventListener('click', function(e) {
+    console.log("Photo upload button activated");
+    e.preventDefault();
     handleUploadPhoto();
 });
 
 function handleUploadPhoto() {
-    console.log("Upload photo button activated");
+    console.log("handleUploadPhoto called");
     const fileInput = document.getElementById('uploadPhotoInput');
+    console.log("Files selected:", fileInput.files.length);
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
             uploadFile(file, 'photo', 'photoEmotionInput', 'photoProgressBar', 'photoProgressContainer');
@@ -355,17 +359,16 @@ function handleUploadPhoto() {
 }
 
 // Video Upload
-document.getElementById('uploadVideoButton').addEventListener('click', function() {
-    handleUploadVideo();
-});
-document.getElementById('uploadVideoButton').addEventListener('touchstart', function(e) {
+document.getElementById('uploadVideoButton').addEventListener('click', function(e) {
+    console.log("Video upload button activated");
     e.preventDefault();
     handleUploadVideo();
 });
 
 function handleUploadVideo() {
-    console.log("Upload video button activated");
+    console.log("handleUploadVideo called");
     const fileInput = document.getElementById('uploadVideoInput');
+    console.log("Files selected:", fileInput.files.length);
     if (fileInput.files.length > 0) {
         Array.from(fileInput.files).forEach(file => {
             uploadFile(file, 'video', 'videoEmotionInput', 'videoProgressBar', 'videoProgressContainer');
@@ -377,16 +380,14 @@ function handleUploadVideo() {
 }
 
 // Voice Recording
-document.getElementById('recordVoiceButton').addEventListener('click', function() {
-    handleRecordVoice();
-});
-document.getElementById('recordVoiceButton').addEventListener('touchstart', function(e) {
+document.getElementById('recordVoiceButton').addEventListener('click', function(e) {
+    console.log("Record voice button activated");
     e.preventDefault();
     handleRecordVoice();
 });
 
 async function handleRecordVoice() {
-    console.log("Record voice button activated");
+    console.log("handleRecordVoice called");
     if (!authService.currentUser) {
         showToast(translations[currentLang].login_required, 'error');
         return;
@@ -437,16 +438,14 @@ async function handleRecordVoice() {
     }
 }
 
-document.getElementById('stopRecordingButton').addEventListener('click', function() {
-    handleStopRecording();
-});
-document.getElementById('stopRecordingButton').addEventListener('touchstart', function(e) {
+document.getElementById('stopRecordingButton').addEventListener('click', function(e) {
+    console.log("Stop recording button activated");
     e.preventDefault();
     handleStopRecording();
 });
 
 function handleStopRecording() {
-    console.log("Stop recording button activated");
+    console.log("handleStopRecording called");
     if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
@@ -457,84 +456,65 @@ function handleStopRecording() {
 
 // Challenge Submissions
 document.querySelectorAll('[data-challenge-id]').forEach(button => {
-    ['click', 'touchstart'].forEach(eventType => {
-        button.addEventListener(eventType, async function(e) {
-            e.preventDefault();
-            console.log("Challenge button activated:", this.dataset.challengeId);
-            if (!authService.currentUser) {
-                showToast(translations[currentLang].login_required, 'error');
-                return;
-            }
-            const challengeId = this.dataset.challengeId;
-            let responseData = {};
-            switch (challengeId) {
-                case 'funny-question':
-                    responseData.answer = document.getElementById('funnyQuestionResponse').value;
-                    if (!responseData.answer) {
-                        showToast('Please enter an answer for the funny question challenge.', 'info');
-                        return;
-                    }
-                    break;
-                case 'dance-off':
-                    const videoFile = document.getElementById('danceOffVideoInput').files[0];
-                    if (!videoFile) {
-                        showToast('Please upload a video for the dance-off challenge.', 'info');
-                        return;
-                    }
-                    await uploadFile(videoFile, 'challenge_video', '', 'videoProgressBar', 'videoProgressContainer');
-                    responseData.videoUploaded = true;
-                    break;
-                case 'childhood-memory':
-                    responseData.story = document.getElementById('childhoodMemoryResponse').value;
-                    if (!responseData.story) {
-                        showToast('Please enter your story for the childhood memory challenge.', 'info');
-                        return;
-                    }
-                    break;
-            }
-            try {
-                await firestore.collection('users').doc(authService.currentUser.uid).collection('challenges').add({
-                    challengeId: challengeId,
-                    responseData: responseData,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showToast('Challenge response submitted!', 'success');
-                if (challengeId === 'funny-question') document.getElementById('funnyQuestionResponse').value = '';
-                if (challengeId === 'dance-off') document.getElementById('danceOffVideoInput').value = '';
-                if (challengeId === 'childhood-memory') document.getElementById('childhoodMemoryResponse').value = '';
-            } catch (error) {
-                showToast(`Challenge submission failed: ${error.message}`, 'error');
-                console.error('Challenge submission error:', error);
-            }
-        });
+    button.addEventListener('click', async function(e) {
+        console.log("Challenge button activated:", this.dataset.challengeId);
+        e.preventDefault();
+        if (!authService.currentUser) {
+            showToast(translations[currentLang].login_required, 'error');
+            return;
+        }
+        const challengeId = this.dataset.challengeId;
+        let responseData = {};
+        switch (challengeId) {
+            case 'funny-question':
+                responseData.answer = document.getElementById('funnyQuestionResponse').value;
+                if (!responseData.answer) {
+                    showToast('Please enter an answer for the funny question challenge.', 'info');
+                    return;
+                }
+                break;
+            case 'dance-off':
+                const videoFile = document.getElementById('danceOffVideoInput').files[0];
+                if (!videoFile) {
+                    showToast('Please upload a video for the dance-off challenge.', 'info');
+                    return;
+                }
+                await uploadFile(videoFile, 'challenge_video', '', 'videoProgressBar', 'videoProgressContainer');
+                responseData.videoUploaded = true;
+                break;
+            case 'childhood-memory':
+                responseData.story = document.getElementById('childhoodMemoryResponse').value;
+                if (!responseData.story) {
+                    showToast('Please enter your story for the childhood memory challenge.', 'info');
+                    return;
+                }
+                break;
+        }
+        try {
+            await firestore.collection('users').doc(authService.currentUser.uid).collection('challenges').add({
+                challengeId: challengeId,
+                responseData: responseData,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showToast('Challenge response submitted!', 'success');
+            if (challengeId === 'funny-question') document.getElementById('funnyQuestionResponse').value = '';
+            if (challengeId === 'dance-off') document.getElementById('danceOffVideoInput').value = '';
+            if (challengeId === 'childhood-memory') document.getElementById('childhoodMemoryResponse').value = '';
+        } catch (error) {
+            showToast(`Challenge submission failed: ${error.message}`, 'error');
+            console.error('Challenge submission error:', error);
+        }
     });
 });
 
-// Placeholder for Payment Buttons (Implement as needed)
+// Placeholder for Payment Buttons
 function initializePaymentButtons() {
     console.log("Initializing payment buttons (placeholder)");
-    // Add PayPal, Google Pay, Apple Pay logic here
-    // Example for PayPal:
-    /*
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: { value: '15.00' } // Example for Essential Legacy
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                showToast('Payment successful!', 'success');
-            });
-        }
-    }).render('#paypal-essential');
-    */
+    // Add PayPal, Google Pay, Apple Pay logic here as needed
 }
 
 window.onload = function() {
+    console.log("Window loaded");
     document.getElementById('current-year').textContent = new Date().getFullYear();
     initializePaymentButtons();
 };
-
